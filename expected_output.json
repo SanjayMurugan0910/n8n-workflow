@@ -1,0 +1,23 @@
+{
+  "fileName": "namesanjay.txt",
+  "fileId": "1-10p8R0K54BcXyJUsg9bdchrUJEeu-eX",
+  "textContent": "My name is Sanjay and I live in Salem, Tamil Nadu. My email is sanjay@example.com.",
+  "entities": [
+    {
+      "entity_group": "PER",
+      "word": "Sanjay"
+    },
+    {
+      "entity_group": "LOC",
+      "word": "Salem"
+    },
+    {
+      "entity_group": "LOC",
+      "word": "Tamil Nadu"
+    },
+    {
+      "entity_group": "MISC",
+      "word": "sanjay@example.com"
+    }
+  ]
+}
