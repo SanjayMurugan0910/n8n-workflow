@@ -1,0 +1,81 @@
+{
+  "name": "Extract Text + HuggingFace NER",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "json"
+      },
+      "id": "1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const base64 = require('buffer').Buffer.from(\"TXkgbmFtZSBpcyBTYW5qYXkgYW5kIEkgbGl2ZSBpbiBTYWxlbSwgVGFtaWwgTmFkdS4gTXkgZW1haWwgaXMgc2FuamF5QGV4YW1wbGUuY29tLg==\", 'base64').toString('utf-8');\nreturn [{\n  json: {\n    id: \"1-10p8R0K54BcXyJUsg9bdchrUJEeu-eX\",\n    name: \"namesanjay.txt\",\n    textContent: base64\n  }\n}];"
+      },
+      "id": "2",
+      "name": "Mock Extract Text",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api-inference.huggingface.co/models/dslim/bert-base-NER",
+        "options": {},
+        "authentication": "headerAuth",
+        "sendBody": true,
+        "jsonParameters": true,
+        "body": {
+          "inputs": "={{$json[\"textContent\"]}}"
+        }
+      },
+      "id": "3",
+      "name": "HuggingFace NER",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 2,
+      "position": [
+        750,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HUGGINGFACE_API_KEY",
+          "name": "HuggingFace API Key"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mock Extract Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Extract Text": {
+      "main": [
+        [
+          {
+            "node": "HuggingFace NER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
